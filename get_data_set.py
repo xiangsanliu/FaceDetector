@@ -26,7 +26,6 @@ def CatchVideo():
 
         cv2.imshow("xiang", frame)
 
-        c = cv2.waitKey(10)
         if num>500:
             break
 
