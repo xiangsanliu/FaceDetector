@@ -38,12 +38,13 @@ def read_path(images, labels, path_name, label):
         images.append(image)
         labels.append(label)
 
-def loaddata():
+
+def loaddata(parent_dir):
     images = []
     labels = []
-    read_path(images, labels, "d:/face/pic/xiang", 0)
-    read_path(images, labels, "d:/face/pic/wang", 1)
-    read_path(images, labels, "d:/face/pic/cheng", 2)
+    read_path(images, labels, parent_dir+"xiang", 0)
+    read_path(images, labels, parent_dir+"nong", 1)
+    read_path(images, labels, parent_dir+"unknow", 2)
 
     images = np.array(images)
     labels = np.array(labels)
@@ -56,6 +57,5 @@ def loaddata():
     return images, labels
 
 
-images, labels = loaddata()
-
-print(labels)
+if __name__ == '__main__':
+    images, labels = loaddata("C:/Users/xiang/Documents/face/")

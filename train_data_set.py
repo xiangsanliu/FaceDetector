@@ -35,7 +35,7 @@ class Dataset:
         self.input_shape = None
 
     # 加载数据并预处理
-    def load(self, img_rows=IMAGE_SIZE, img_cols=IMAGE_SIZE, img_channels=3, nb_classes=3):
+    def load(self, img_rows=IMAGE_SIZE, img_cols=IMAGE_SIZE, img_channels=3, nb_classes=5):
         images, labels = loaddata()
 
         # 划分训练集、验证集
@@ -85,10 +85,10 @@ class Model:
     def __init__(self):
         self.model = None
 
-    def build_model(self, dataset, nb_classes=3):
+    def build_model(self, dataset, nb_classes=5):
         self.model = Sequential()
 
-        self.model.add(Convolution2D(32, 3, 3, border_mode='same', input_shape = dataset.input_shape))
+        self.model.add(Convolution2D(32, 3, 3, border_mode='same', input_shape=dataset.input_shape))
         self.model.add(Activation('relu'))
 
         self.model.add(Convolution2D(32, 3, 3))
@@ -116,23 +116,23 @@ class Model:
         self.model.summary()
 
     def train(self, dataset, batch_size=20, nb_epoch=10, data_augmentation=True):
-        sgd = SGD(lr = 0.01, decay = 1e-6, momentum=0.9, nesterov=True)
+        sgd = SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True)
 
         self.model.compile(loss='categorical_crossentropy', optimizer=sgd, metrics=['accuracy'])
 
         if not data_augmentation:
             self.model.fit(dataset.train_images, dataset.train_labels, batch_size=batch_size, nb_epoch=nb_epoch
                            , validation_data=(dataset.valid_images, dataset.valid_labels), shuffle=True)
-        else :
+        else:
             datagen = ImageDataGenerator(
-                featurewise_center= False,
-                samplewise_center= False,
-                featurewise_std_normalization= False,
+                featurewise_center=False,
+                samplewise_center=False,
+                featurewise_std_normalization=False,
                 zca_whitening=False,
                 rotation_range=20,
                 width_shift_range=0.2,
                 height_shift_range=0.2,
-                horizontal_flip= True,
+                horizontal_flip=True,
                 vertical_flip=False
             )
 
@@ -143,7 +143,7 @@ class Model:
                                      , nb_epoch=nb_epoch
                                      , validation_data=(dataset.valid_images, dataset.valid_labels))
 
-    MODEL_PATH = 'd:/face/me.face.model.h5'
+    MODEL_PATH = 'C:/Users/xiang/Documents/face/me.face.model.h5'
 
     def save_model(self, file_path=MODEL_PATH):
         self.model.save(file_path)
@@ -168,19 +168,19 @@ class Model:
 
         result = self.model.predict_proba(image)
 
-
         result = self.model.predict_classes(image)
 
         return result[0]
 
 
-# dataset = Dataset()
-# dataset.load()
-#
-# model = Model()
-# model.build_model(dataset)
-# model.train(dataset)
-# model.save_model(file_path="d:/face/me.face.model.h5")
+if __name__ == '__main__':
+    dataset = Dataset()
+    dataset.load()
 
-# model.load_model(file_path="d:/face/me.face.model.h5")
-# model.evaluate(dataset)
+    model = Model()
+    # model.build_model(dataset)
+    # model.train(dataset)
+    # model.save_model(file_path="d:/face/me.face.model.h5")
+    #
+    model.load_model(file_path="C:/Users/xiang/Documents/face/me.face.model.h5")
+    model.evaluate(dataset)
