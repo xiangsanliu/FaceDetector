@@ -6,12 +6,12 @@ from train_data_set import Model
 
 if __name__ == '__main__':
     model = Model()
-    model.load_model(file_path='C:/Users/xiang/Documents/face/me.face.model.h5')
+    model.load_model(file_path='C:/Users/xiang/Pictures/face/me.face.model.h5')
 
     color = (0, 255, 255)
     cap = cv2.VideoCapture(0)
 
-    cascade_path = "C:/Users/xiang/Documents/OpenCVCascades/haarcascades/haarcascade_frontalface_alt2.xml"
+    cascade_path = "haarcascade_frontalface_alt2.xml"
 
     while(cap.isOpened()):
         ok, frame = cap.read()

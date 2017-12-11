@@ -30,6 +30,7 @@ def resize_image(image, height=IMAGE_SIZE, width=IMAGE_SIZE):
     return cv2.resize(constant, (height, width))
 
 
+#读取图片数据并于标签绑定
 def read_path(images, labels, path_name, label):
     for dir_item in os.listdir(path_name):
         full_path = os.path.abspath(os.path.join(path_name, dir_item))
@@ -37,7 +38,6 @@ def read_path(images, labels, path_name, label):
         image = resize_image(image, IMAGE_SIZE, IMAGE_SIZE)
         images.append(image)
         labels.append(label)
-
 
 def loaddata(parent_dir):
     images = []
@@ -49,13 +49,7 @@ def loaddata(parent_dir):
     images = np.array(images)
     labels = np.array(labels)
 
-    # labels = np.array([0 if label.endswith('xiang') else 1 for label in labels])
-    # labels = np.array([1 if label.endswith('wang') else label for label in labels])
-    # labels = np.array([2 if label.endswith('cheng') else label for label in labels])
-
-
     return images, labels
 
-
 if __name__ == '__main__':
-    images, labels = loaddata("C:/Users/xiang/Documents/face/")
+    images, labels = loaddata("C:/Users/xiang/Pictures/face/")
