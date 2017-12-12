@@ -35,7 +35,7 @@ def read_path(images, labels, path_name, label):
     for dir_item in os.listdir(path_name):
         full_path = os.path.abspath(os.path.join(path_name, dir_item))
         image = cv2.imread(full_path)
-        image = resize_image(image, IMAGE_SIZE, IMAGE_SIZE)
+        image = resize_image(image, IMAGE_SIZE, IMAGE_SIZE)     ##把所有图片改成64*64大小的
         images.append(image)
         labels.append(label)
 

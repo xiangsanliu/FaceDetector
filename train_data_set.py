@@ -90,29 +90,34 @@ class Model:
 
         #保留边界像素
         self.model.add(Convolution2D(32, 3, 3, border_mode='same', input_shape=dataset.input_shape, activation='relu'))#卷积层和激活函数
+        ##输出(32, 64, 64)
 
         self.model.add(Convolution2D(32, 3, 3, activation='relu'))      #卷积层和激活函数
+        #输出(32, 64, 64)
 
         self.model.add(MaxPooling2D(pool_size=(2, 2)))                                                       #池化层
+        #输出(32, 32, 32)
 
         self.model.add(Dropout(0.25))
 
         self.model.add(Convolution2D(64, 3, 3, border_mode='same', activation='relu'))
+        #输出(64, 32, 32)
 
         self.model.add(Convolution2D(64, 3, 3, activation='relu'))
+        #输出(64, 32, 32)
 
         self.model.add(MaxPooling2D(pool_size=(2, 2)))
+        #输出(64, 16, 16)
 
         self.model.add(Dropout(0.25))
 
         self.model.add(Flatten())   #数据从二维转为一维
+        #输出64*16*16 =  16384
 
+        #二层全连接神经网络 512*人的个数
         self.model.add(Dense(512))
-
         self.model.add(Activation('relu'))
-
         self.model.add(Dropout(0.5))
-
         self.model.add(Dense(nb_classes))
 
         self.model.add(Activation('softmax'))
