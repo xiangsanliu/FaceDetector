@@ -49,6 +49,8 @@ if __name__ == '__main__':
                 else :
                     cv2.putText(frame, "unknow", (x+30, y+30), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 255), 2)
                     control.redlight()
+        else:
+            control.closelight()
 
         cv2.imshow("识别", frame)
 
