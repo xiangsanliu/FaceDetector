@@ -34,11 +34,9 @@ if __name__ == '__main__':
                 if faceId == 0 :
                     cv2.putText(frame, "xiang", (x+30, y+30), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 255), 2)
                 elif faceId == 1:
-                    cv2.putText(frame, "wang", (x+30, y+30), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 255), 2)
+                    cv2.putText(frame, "nong", (x+30, y+30), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 255), 2)
                 elif faceId == 2 :
                     cv2.putText(frame, "cheng", (x+30, y+30), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 255), 2)
-                elif faceId ==3 :
-                    cv2.putText(frame, "guo", (x+30, y+30), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 255), 2)
                 else :
                     cv2.putText(frame, "unknow", (x+30, y+30), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 255), 2)
 

@@ -19,7 +19,7 @@ def get_data(parent_dir, child_dir):
         if len(faceRects) > 0:              #把检测出来的人脸框出来
             for faceRect in faceRects:
                 x, y, w, h = faceRect
-                img_name = '%s/%d.jpg'%(parent_dir+child_dir, num+items.__len__()) #指定保存图片的路径和文件名
+                img_name = '%s/%d.jpg'%(parent_dir+child_dir , num+items.__len__()) #指定保存图片的路径和文件名
                 image = gray[y-10:y+h+10, x-10: x+w+10]            #截取人脸
                 cv2.imwrite(img_name, image)    #保存图片的灰度图
                 num += 1

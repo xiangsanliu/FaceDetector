@@ -33,6 +33,7 @@ def resize_image(image, height=IMAGE_SIZE, width=IMAGE_SIZE):
 #读取图片数据并于标签绑定
 def read_path(images, labels, path_name, label):
     for dir_item in os.listdir(path_name):
+
         full_path = os.path.abspath(os.path.join(path_name, dir_item))
         image = cv2.imread(full_path)
         image = resize_image(image, IMAGE_SIZE, IMAGE_SIZE)     ##把所有图片改成64*64大小的
@@ -44,7 +45,8 @@ def loaddata(parent_dir):
     labels = []
     read_path(images, labels, parent_dir+"xiang", 0)
     read_path(images, labels, parent_dir+"nong", 1)
-    read_path(images, labels, parent_dir+"unknow", 2)
+    read_path(images, labels, parent_dir+"cheng", 2)
+    read_path(images, labels, parent_dir+"others3", 3)
 
     images = np.array(images)
     labels = np.array(labels)

@@ -33,7 +33,7 @@ class Dataset:
         self.input_shape = None
 
     # 加载数据并预处理
-    def load(self, img_rows=IMAGE_SIZE, img_cols=IMAGE_SIZE, img_channels=3, nb_classes=5):
+    def load(self, img_rows=IMAGE_SIZE, img_cols=IMAGE_SIZE, img_channels=3, nb_classes=4):
         images, labels = loaddata("C:/Users/xiang/Pictures/face/")
 
         # 随机划分训练集、验证集
@@ -85,7 +85,7 @@ class Model:
     def __init__(self):
         self.model = None
 
-    def build_model(self, dataset, nb_classes=5):
+    def build_model(self, dataset, nb_classes=4):
         self.model = Sequential()
 
         #保留边界像素
@@ -98,7 +98,7 @@ class Model:
         self.model.add(MaxPooling2D(pool_size=(2, 2)))                                                       #池化层
         #输出(32, 32, 32)
 
-        self.model.add(Dropout(0.25))
+        # self.model.add(Dropout(0.25))
 
         self.model.add(Convolution2D(64, 3, 3, border_mode='same', activation='relu'))
         #输出(64, 32, 32)
@@ -109,7 +109,7 @@ class Model:
         self.model.add(MaxPooling2D(pool_size=(2, 2)))
         #输出(64, 16, 16)
 
-        self.model.add(Dropout(0.25))
+        # self.model.add(Dropout(0.25))
 
         self.model.add(Flatten())   #数据从二维转为一维
         #输出64*16*16 =  16384
@@ -117,7 +117,7 @@ class Model:
         #二层全连接神经网络 512*人的个数
         self.model.add(Dense(512))
         self.model.add(Activation('relu'))
-        self.model.add(Dropout(0.5))
+        # self.model.add(Dropout(0.5))
         self.model.add(Dense(nb_classes))
 
         self.model.add(Activation('softmax'))
@@ -125,33 +125,13 @@ class Model:
 
         self.model.summary()
 
-    def train(self, dataset, batch_size=20, nb_epoch=10, data_augmentation=True):
+    def train(self, dataset, batch_size=20, nb_epoch=1, data_augmentation=True):
         sgd = SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True)
 
         self.model.compile(loss='categorical_crossentropy', optimizer=sgd, metrics=['accuracy'])
 
-        # if not data_augmentation:
         self.model.fit(dataset.train_images, dataset.train_labels, batch_size=batch_size, nb_epoch=nb_epoch
                        , validation_data=(dataset.valid_images, dataset.valid_labels), shuffle=True)
-        # else:
-        #     datagen = ImageDataGenerator(
-        #         featurewise_center=False,
-        #         samplewise_center=False,
-        #         featurewise_std_normalization=False,
-        #         zca_whitening=False,
-        #         rotation_range=20,
-        #         width_shift_range=0.2,
-        #         height_shift_range=0.2,
-        #         horizontal_flip=True,
-        #         vertical_flip=False
-        #     )
-        #
-        #     datagen.fit(dataset.train_images)
-        #
-        #     self.model.fit_generator(datagen.flow(dataset.train_images, dataset.train_labels, batch_size=batch_size)
-        #                              , samples_per_epoch=dataset.train_images.shape[0]
-        #                              , nb_epoch=nb_epoch
-        #                              , validation_data=(dataset.valid_images, dataset.valid_labels))
 
     MODEL_PATH = 'C:/Users/xiang/Documents/face/me.face.model.h5'
 
@@ -190,7 +170,7 @@ if __name__ == '__main__':
     model = Model()
     model.build_model(dataset)
     model.train(dataset)
-    model.save_model(file_path="d:/face/me.face.model.h5")
+    model.save_model(file_path="C:/Users/xiang/Pictures/face/me.face.model.h5")
 
     # model.load_model(file_path="C:/Users/xiang/Documents/face/me.face.model.h5")
     # model.evaluate(dataset)
