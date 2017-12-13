@@ -1,10 +1,13 @@
 import cv2
 import gc
+
+from socket_test import Control
 from train_data_set import Model
 
 
 
 if __name__ == '__main__':
+    control = Control()
     model = Model()
     model.load_model(file_path='C:/Users/xiang/Pictures/face/me.face.model.h5')
 
@@ -33,12 +36,19 @@ if __name__ == '__main__':
                 print(faceId)
                 if faceId == 0 :
                     cv2.putText(frame, "xiang", (x+30, y+30), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 255), 2)
+                    control.greenlight()
+                    control.lockon()
                 elif faceId == 1:
                     cv2.putText(frame, "nong", (x+30, y+30), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 255), 2)
+                    control.greenlight()
+                    control.lockon()
                 elif faceId == 2 :
                     cv2.putText(frame, "cheng", (x+30, y+30), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 255), 2)
+                    control.greenlight()
+                    control.lockon()
                 else :
                     cv2.putText(frame, "unknow", (x+30, y+30), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 255), 2)
+                    control.redlight()
 
         cv2.imshow("识别", frame)
 
