@@ -1,5 +1,6 @@
 import socket
 
+
 class Control:
 
     def __init__(self):
@@ -23,7 +24,6 @@ class Control:
     def closelight(self):
         message = '0110005A0002040000000076ec'
         self.lightsocket.sendall(bytes.fromhex(message))
-
 
 
 if __name__ == '__main__':

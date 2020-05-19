@@ -1,7 +1,7 @@
 import random
 
 import numpy as np
-from sklearn.cross_validation import train_test_split
+from sklearn.model_selection import train_test_split
 from keras.preprocessing.image import ImageDataGenerator
 from keras.models import Sequential
 from keras.layers import Dense, Dropout, Activation, Flatten
@@ -60,12 +60,12 @@ class Dataset:
         print(valid_images.shape[0], 'valid_samples')
         print(test_images.shape[0], 'test_samples')
 
-        #模型使用categorical_crossentropy作为损失函数，因此需要根据类别数量将类别标签进行one-hot编码使其向量化
+        # 模型使用categorical_crossentropy作为损失函数，因此需要根据类别数量将类别标签进行one-hot编码使其向量化
         train_labels = np_utils.to_categorical(train_labels, nb_classes)
         valid_labels = np_utils.to_categorical(valid_labels, nb_classes)
         test_labels = np_utils.to_categorical(test_labels, nb_classes)
 
-        #像素数据浮点化和归一化
+        # 像素数据浮点化和归一化
         train_images = train_images.astype('float32')
         valid_images = valid_images.astype('float32')
         test_images = test_images.astype('float32')
@@ -88,40 +88,40 @@ class Model:
     def build_model(self, dataset, nb_classes=4):
         self.model = Sequential()
 
-        #保留边界像素
-        self.model.add(Convolution2D(32, 3, 3, border_mode='same', input_shape=dataset.input_shape, activation='relu'))#卷积层和激活函数
+        # 保留边界像素
+        self.model.add(
+            Convolution2D(32, 3, 3, border_mode='same', input_shape=dataset.input_shape, activation='relu'))  # 卷积层和激活函数
         ##输出(32, 64, 64)
 
         # self.model.add(Convolution2D(32, 3, 3, activation='relu'))      #卷积层和激活函数
-        #输出(32, 64, 64)
+        # 输出(32, 64, 64)
 
-        self.model.add(MaxPooling2D(pool_size=(2, 2)))                                                       #池化层
-        #输出(32, 32, 32)
+        self.model.add(MaxPooling2D(pool_size=(2, 2)))  # 池化层
+        # 输出(32, 32, 32)
 
         self.model.add(Dropout(0.5))
 
         self.model.add(Convolution2D(64, 3, 3, border_mode='same', activation='relu'))
-        #输出(64, 32, 32)
+        # 输出(64, 32, 32)
 
         # self.model.add(Convolution2D(64, 3, 3, activation='relu'))
-        #输出(64, 32, 32)
+        # 输出(64, 32, 32)
 
         self.model.add(MaxPooling2D(pool_size=(2, 2)))
-        #输出(64, 16, 16)
+        # 输出(64, 16, 16)
 
         self.model.add(Dropout(0.5))
 
-        self.model.add(Flatten())   #数据从二维转为一维
-        #输出64*16*16 =  16384
+        self.model.add(Flatten())  # 数据从二维转为一维
+        # 输出64*16*16 =  16384
 
-        #二层全连接神经网络 512*人的个数
+        # 二层全连接神经网络 512*人的个数
         self.model.add(Dense(512))
         self.model.add(Activation('relu'))
         self.model.add(Dropout(0.5))
         self.model.add(Dense(nb_classes))
 
         self.model.add(Activation('softmax'))
-
 
         self.model.summary()
 
